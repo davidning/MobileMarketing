@@ -1,0 +1,75 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Address:</b>
+  <%= @sms_gateway.address %>
+</p>
+
+<p>
+  <b>Asiainfo:</b>
+  <%= @sms_gateway.asiainfo %>
+</p>
+
+<p>
+  <b>Corpid:</b>
+  <%= @sms_gateway.corpid %>
+</p>
+
+<p>
+  <b>Spid:</b>
+  <%= @sms_gateway.spid %>
+</p>
+
+<p>
+  <b>Version:</b>
+  <%= @sms_gateway.version %>
+</p>
+
+<p>
+  <b>Loginname:</b>
+  <%= @sms_gateway.loginname %>
+</p>
+
+<p>
+  <b>Password:</b>
+  <%= @sms_gateway.password %>
+</p>
+
+<p>
+  <b>Moport:</b>
+  <%= @sms_gateway.moport %>
+</p>
+
+<p>
+  <b>Mtport:</b>
+  <%= @sms_gateway.mtport %>
+</p>
+
+<p>
+  <b>Mtandmoport:</b>
+  <%= @sms_gateway.mtandmoport %>
+</p>
+
+<p>
+  <b>Moconnections:</b>
+  <%= @sms_gateway.moconnections %>
+</p>
+
+<p>
+  <b>Mtconnections:</b>
+  <%= @sms_gateway.mtconnections %>
+</p>
+
+<p>
+  <b>Mtandmoconnections:</b>
+  <%= @sms_gateway.mtandmoconnections %>
+</p>
+
+<p>
+  <b>Mtspeedlimit:</b>
+  <%= @sms_gateway.mtspeedlimit %>
+</p>
+
+
+<%= link_to 'Edit', edit_sms_gateway_path(@sms_gateway) %> |
+<%= link_to 'Back', sms_gateways_path %>

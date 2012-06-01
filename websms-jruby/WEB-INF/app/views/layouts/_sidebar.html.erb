@@ -1,0 +1,136 @@
+<% if @current_user %>
+	<div class="span2 well">
+		<ul class="nav nav-list">
+		<!--
+			<li class="nav-header">
+				仪表盘
+			</li>
+			<li>
+				<a href="#"> <i class="icon-home"></i> 首页</a>
+			</li>
+			<li>
+				<a href="#"> <i class="icon-tasks"></i> 状态</a>
+			</li>
+			<li>
+				<a href="#"> <i class="icon-wrench"></i> 统计</a>
+			</li>
+			<% if @current_user && @current_user.admin? %>
+				<li class="nav-header">
+				系统管理
+				</li>
+				<li>
+					<a href="#"> <i class="icon-book"></i> 运行状态</a>
+				</li>
+				<li>
+					<a href="#"> <i class="icon-tasks"></i> 队列状态</a>
+				</li>
+				<li>
+					<a href="#"> <i class="icon-wrench"></i> 设置向导</a>
+				</li>
+			<% end %>	
+
+			<li class="nav-header">
+				发短信
+			</li>
+			<li>
+				<%= link_to(new_submit_path) do %>
+					<i class="icon-envelope"></i> 单条发送
+				<% end %>
+			</li>
+		-->	
+
+			<li class="nav-header">
+				短信
+			</li>
+			<li>
+				<%= link_to(delivers_path) do %>
+					<i class="icon-envelope"></i> 收件箱
+				<% end %>
+			</li>
+			<li>
+				<%= link_to(submits_path) do %>
+					<i class="icon-envelope"></i> 发件箱
+				<% end %>
+			</li>
+			<li>
+				<%= link_to(submits_path) do %>
+					<i class="icon-inbox"></i> 已发送
+				<% end %>
+			</li>
+			<li class="divider"></li>
+			<li>
+				<%= link_to(bulks_path) do %>
+					<i class="icon-envelope"></i> 任务管理
+				<% end %>
+			</li>
+			<li>
+				<%= link_to(new_bulk_path) do %>
+					<i class="icon-book"></i> 新任务
+				<% end %>
+			</li>
+
+			<li class="nav-header">
+				设置
+			</li>
+			<% if @current_user && @current_user.admin? %>
+				<li>
+					<%= link_to(users_path) do %>
+						<i class="icon-user"></i> 用户
+					<% end %>
+				</li>
+			<!--	
+				<li>
+					<%= link_to(new_user_path) do %>
+						<i class="icon-plus-sign"></i> 添加用户
+					<% end %>
+				</li>
+			-->	
+			<% end %>	
+			
+			<% if @current_user && @current_user.admin? %>
+				<li>
+					<%= link_to(sms_gateways_path) do %>
+						<i class="icon-th-list"></i> 网关
+					<% end %>
+				</li>
+				<li>
+					<%= link_to(whitelists_path) do %>
+						<i class="icon-book"></i> 白名单
+					<% end %>
+				</li>
+			<!--	
+				<li>
+					<%= link_to(new_sms_gateway_path) do %>
+						<i class="icon-plus-sign"></i> 添加网关
+					<% end %>
+				</li>
+				<li>
+					<%= link_to(services_path) do %>
+						<i class="icon-th-list"></i> 所有业务
+					<% end %>
+				</li>
+				<li>
+					<%= link_to(new_service_path) do %>
+						<i class="icon-plus-sign"></i> 添加业务
+					<% end %>
+				</li>
+			-->	
+			<% end %>	
+
+			<li>
+				<%= link_to(charges_path) do %>
+					<i class="icon-list-alt"></i> 充值
+				<% end %>
+			</li>
+		<!--	
+			<% if @current_user && @current_user.admin? %>
+				<li>
+					<%= link_to(new_charge_path) do %>
+						<i class="icon-shopping-cart"></i> 账户充值
+					<% end %>
+				</li>
+			<% end %>	
+		-->	
+		</ul>
+	</div>
+<% end %>	

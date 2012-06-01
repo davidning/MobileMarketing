@@ -1,0 +1,23 @@
+<% content_for :title do %>
+	<%= "仪表盘" %>
+<% end %>
+
+<div class="row-fluid">
+	<h1 class="page-header">仪表盘</h1>
+</div>
+
+<%= render(:partial => "shared/notice", :locals => {:notice => notice}) %>
+
+<div class="row-fluid">
+	<div class="well">
+		<h2>概况</h2>
+		<table class="table table-striped">
+			<tbody>
+				<tr>
+					<td> <%= @current_user.tavailable%> </td>
+					<td>短信条数</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

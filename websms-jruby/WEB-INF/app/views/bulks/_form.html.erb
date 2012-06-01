@@ -1,0 +1,206 @@
+﻿<% content_for :javascript do %>
+    var number_source = 0
+	
+	function hideFileUpload() {
+		var fileUpload = document.getElementById('fileUpload');
+		fileUpload.style.display = 'none';  
+		
+		var manualInput = document.getElementById('manualInput');
+		manualInput.style.display = 'block';  
+		
+		number_source = 0
+	}
+	
+	function hideManualInput() {
+		var manualInput = document.getElementById('manualInput');
+		manualInput.style.display = 'none';  
+
+		var fileUpload = document.getElementById('fileUpload');
+		fileUpload.style.display = 'block';  		
+		
+		number_source = 1
+	}
+	
+	function textCounter(message_id, charcount_id, smscount_id) {
+		var message = document.getElementById(message_id)
+		var charcount = document.getElementById(charcount_id)
+		var smscount = document.getElementById(smscount_id)
+		var msglen = message.value.length
+		charcount.innerHTML = msglen
+
+		if (msglen == 0) {
+			smscount.innerHTML = 0
+		}
+		else if (msglen <= 70) {
+			smscount.innerHTML = 1
+		}
+		else if (msglen <= 320) {
+			smscount.innerHTML = Math.ceil(message.value.length/64)
+		}
+		else {
+			message.value = message.value.substring(0, 320)
+		}
+		
+		charcount.innerHTML = message.value.length
+	}
+
+	$(document).ready(function() {
+		textCounter('bulk_content', 'charcount', 'smscount')
+		phoneCounter('bulk_telephone', 'phonecount')
+	})
+
+	function phoneCounter(telephone_id, phonecount_id) {
+		var t = document.getElementById(telephone_id)
+		var phonecount = document.getElementById(phonecount_id)
+		var r;
+	//	r = t.value.split(/\n/).length
+	//	r = t.value.split(/[\r\n]+/).length
+		r = t.value.split(/\n[\r\n]*/).length
+		phonecount.innerHTML = r
+	}
+
+	function isNumeric(elem, helperMsg){
+		var numericExpression = /^[0-9]+$/;
+		if(elem.value.match(numericExpression)){
+			return true
+		}else{
+			alert(helperMsg)
+			elem.focus();
+			return false;
+		}
+	}
+
+	function checkTelephone() {
+		// manual input
+		if (number_source == 0) {
+			var t = document.getElementById('bulk_telephone')
+			var tv = t.value
+			if (tv == null || tv == "") {
+				alert("手机号码不能为空!")
+				return false;
+			}
+			
+			var message = document.getElementById('bulk_content').value
+			if (message == null || message == "") {
+				alert("短信内容不能为空!")
+				return false
+			}
+			
+			var ar = tv.split(/\n[\r\n]*/)
+			var cmphoneExpression = /^1(3[4-9]|47|5[0|1|2|8|9]|8[2|3|7|8])\d{8}\s*$/
+			for (var ix=0; ix<ar.length; ix++) {
+				if (!ar[ix].match(cmphoneExpression)) {
+					alert("手机号码格式无效!")
+					t.focus()
+					return false
+				}
+			}
+		//	alert("号码有效");
+			return true
+		}
+		else {
+			return true
+		}
+	}
+
+<% end %>
+
+<div class="row-fluid">
+	<%= form_for(@bulk, :html => {:class => "form-horizontal"}) do |f| %>
+	  <% if @bulk.errors.any? %>
+		<div id="error_explanation">
+		  <h2><%= pluralize(@bulk.errors.count, "error") %> prohibited this bulk from being saved:</h2>
+
+		  <ul>
+		  <% @bulk.errors.full_messages.each do |msg| %>
+			<li><%= msg %></li>
+		  <% end %>
+		  </ul>
+		</div>
+	  <% end %>
+
+	  <fieldset>
+		  <div class="control-group">
+			<%= f.label :job_type, '短信类型', :class => "control-label" %>
+			<div class="controls">
+			<!--
+				<%= f.select :job_type, Bulk::JOB_TYPE %>
+				-->
+				<%= f.radio_button :job_type, 0, :checked => true %>广告营销
+				<%= f.radio_button :job_type, 1 %>行业应用
+			</div>
+		  </div>
+		  <div class="control-group">
+			<%= f.label :content, '短信内容', :class => "control-label" %>
+			<div class="controls">
+				<%= f.text_area :content, 
+					:rows => 3, 
+					:cols => 80, 
+					:class => "span8", 
+					:onKeyDown =>"textCounter('bulk_content', 'charcount', 'smscount')", 
+					:onKeyUp => "textCounter('bulk_content','charcount', 'smscount')",
+					:onChange => "textCounter('bulk_content','charcount', 'smscount')"
+				%>
+				<p class="help-block">
+					当前内容共 <span class="label label-info" id="charcount">0</span> 字, 将被作为
+					<span class="label label-info" id="smscount">0</span>条短信发送. <br />				
+					<span class="label">70个字符一条短信，超出按多条计算！(如果是长短信的话, 将按64个字符一条短信计算, 最多5条！！)</span>
+				</p>
+			</div>
+		  </div>
+		  <div class="control-group">
+			<%= label_tag :number_source, '号码来源', :class => "control-label" %>
+			<div class="controls">
+				<%= radio_button_tag :number_source, 0, true, :onClick => "hideFileUpload()" %>手工输入
+				<%= radio_button_tag :number_source, 1, false, :onClick => "hideManualInput()" %>从文件导入
+			</div>
+		  </div>
+		  <div class="control-group" id="manualInput">
+			<%= f.label :telephone, '手机号码', :class => "control-label" %>
+			<div class="controls">
+				<%= f.text_area :telephone, 
+					:rows => 10, 
+					:cols => 40, 
+					:class => "span8",
+					:onKeyDown => "phoneCounter('bulk_telephone', 'phonecount')",
+					:onKeyUp => "phoneCounter('bulk_telephone', 'phonecount')",
+					:onChange => "phoneCounter('bulk_telephone', 'phonecount')"
+					%>
+				<p class="help-block">
+					共 <span class="label label-info" id="phonecount"></span> 行					
+					<span class="label">一行一个号码, 如: 13800138000</span>
+				</p>
+			</div>
+		  </div>
+		  <div class="control-group hide" id="fileUpload">
+			<%= f.label :numberfile, '上传号码文件', :class => "control-label" %>
+			<div class="controls">
+				<%= f.file_field :numberfile %>
+			</div>
+		  </div>
+		  <div class="control-group">
+			<%= f.label :schedule_time, '发送时间', :class => "control-label" %>
+			<div class="controls">
+				<%= f.datetime_select :schedule_time, {:start_year => 2012, :discard_year => true } %>
+			</div>
+		  </div>
+		  <div class="control-group">
+			<%= f.label :priority, '优先级', :class => "control-label" %>
+			<div class="controls">
+				<%= f.select :priority, Bulk::BULK_PRIORITY %>
+			</div>
+		  </div>
+		  <div class="control-group">
+			<%= f.label :job_note, '任务备注', :class => "control-label" %>
+			<div class="controls">
+				<%= f.text_area :job_note, :rows => 3, :cols => 40, :class => "span8" %>
+			</div>
+		  </div>
+
+		  <div class="actions">
+			<%= f.submit "提交", :class=>"btn btn-primary", :onclick =>"return checkTelephone()"%>
+			<%= link_to '返回', bulks_path, :class=>"btn" %>
+		  </div>
+		</fieldset>
+	<% end %>
+</div>

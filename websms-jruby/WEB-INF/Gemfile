@@ -1,0 +1,91 @@
+source 'https://rubygems.org'
+
+gem 'rails', '3.2.3'
+gem 'whenever'
+
+# Bundle edge Rails instead:
+# gem 'rails', :git => 'git://github.com/rails/rails.git'
+
+if defined?(JRUBY_VERSION)
+	gem 'jruby-openssl'
+	
+	gem 'activerecord-jdbc-adapter'
+	gem 'activerecord-jdbcsqlite3-adapter'
+	gem 'activerecord-jdbcmssql-adapter'
+else
+	gem 'sqlite3'
+	gem 'sqlite3-ruby'
+	gem 'activerecord-odbc-adapter'
+	gem 'activerecord-sqlserver-adapter'
+end
+
+
+# Gems used only for assets and not required
+# in production environments by default.
+group :assets do
+  gem 'sass-rails',   '~> 3.2.3'
+#  gem 'bootstrap-sass', '~> 2.0.2'
+  gem 'coffee-rails', '~> 3.2.1'
+
+  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
+  gem 'therubyrhino'
+
+  gem 'uglifier', '>= 1.0.3'
+end
+
+# devise
+gem 'devise'
+
+gem 'jquery-rails'
+
+# To use ActiveModel has_secure_password
+# gem 'bcrypt-ruby', '~> 3.0.0'
+
+# To use Jbuilder templates for JSON
+# gem 'jbuilder'
+
+# Use unicorn as the app server
+# gem 'unicorn'
+
+# Deploy with Capistrano
+# gem 'capistrano'
+
+# To use debugger
+# gem 'ruby-debug19', :require => 'ruby-debug'
+
+# the javascript engine for execjs gem
+platforms :jruby do
+  group :assets do
+    gem 'therubyrhino'
+  end
+end
+
+# view
+gem 'will_paginate', '>= 3.0.pre'
+gem 'will_paginate_twitter_bootstrap'
+gem 'client_side_validations'
+gem 'gon'
+
+# queue
+gem 'resque'
+gem 'resque-timeout'
+
+# admin
+#group :production do # we don't install these on travis to speed up test runs
+#  gem 'rails_admin'
+#  gem 'rack-ssl', :require => 'rack/ssl'
+#  gem 'rack-rewrite', '~> 1.2.1', :require => false
+#  gem 'rack-piwik', :require => 'rack/piwik'
+#end
+
+# upload
+gem 'carrierwave'
+
+# web
+gem 'faraday'
+gem 'faraday-stack'
+gem 'em-synchrony', '1.0.0', :platforms => :ruby_19
+
+# i18n
+# gem 'rails-i18n'
+gem 'will-paginate-i18n'

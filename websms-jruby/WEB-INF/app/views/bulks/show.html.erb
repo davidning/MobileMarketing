@@ -1,0 +1,67 @@
+<% content_for :title do %>
+	<%= "批量发送详情" %>
+<% end %>
+
+<div class="row-fluid">
+	<h2>批量发送报告 <small class="pull-right">任务编号:<span class="badge"><%=@bulk.id %></span></small> </h2>
+</div>
+
+<% if notice %>
+<div class="row-fluid">
+	<div class="alert">
+		<p id="notice"><%= notice %></p>
+	</div>
+</div>	
+<% end %>
+
+<div class="row-fluid">
+	<table class="table table-striped table-condensed table-bordered">
+		<caption>发送报告</caption>		
+		<tbody>
+			<tr>
+				<th>任务编号</th>
+				<td><span class="label label-info"><%= @bulk.id %></span></td>
+				<th>所属用户</th>
+				<td><span class="label label-info"><%= User.find_by_id(@bulk.user_id).try(:name) %></span></td>
+				<th>提交时间</th>
+				<td><span class="label label-info"><%= l @bulk.created_at, :format => :long %></span></td>
+			</tr>
+			<tr>
+				<th>短信内容</th>		
+				<td colspan="5"><%= @bulk.content %></td>
+			</tr>
+			<tr>
+				<th>下发号码</th>
+				<td><span class="label label-info"><%= @bulk.spnumber %></span></td>
+				<th>总条数[拆分]</th>		
+				<td><span class="label label-info"><%= @bulk.sms_count*@bulk.pktotal %> [<%= @bulk.pktotal %>条]</span></td>
+				<th>当前状态</th>
+				<td><span class="label label-important"><%= Bulk.state(@bulk.state) %></span></td>
+			</tr>
+			<tr>
+				<th rowspan="2">审核时间</th>
+				<td rowspan="2">
+					<% if @bulk.review_datetime %>
+						<span class="label label-info">
+							<%= l @bulk.review_datetime, :format => :long %>
+						</span>
+					<% end %>	
+				</td>
+				<th rowspan="2">统计</th>
+				<th>成功率</th>
+				<th>失败率</th>
+				<th>未获取</th>
+			</tr>
+			<tr>
+				<td><%= @bulk.success_rate %></td>
+				<td><%= @bulk.failed_rate %></td>
+				<td><%= @bulk.unknown_rate %></td>
+			</tr>
+			<tr>
+				<th>号码列表</th>
+				<td colspan="5" class="well"><%= @bulk.telephone %></td>
+			</tr>
+		  </tr>
+		</tbody>	
+	</table>
+</div>

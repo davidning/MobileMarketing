@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Gwid:</b>
+  <%= @service.gwid %>
+</p>
+
+<p>
+  <b>Feetype:</b>
+  <%= @service.feetype %>
+</p>
+
+<p>
+  <b>Feecode:</b>
+  <%= @service.feecode %>
+</p>
+
+<p>
+  <b>Spnumber:</b>
+  <%= @service.spnumber %>
+</p>
+
+<p>
+  <b>Service:</b>
+  <%= @service.service_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_service_path(@service) %> |
+<%= link_to 'Back', services_path %>

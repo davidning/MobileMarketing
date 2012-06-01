@@ -1,0 +1,55 @@
+﻿<% if notice %>
+<div class="row-fluid">
+	<div class="alert">
+		<p id="notice"><%= notice %></p>
+	</div>
+</div>	
+<% end %>
+
+<div class="row-fluid">
+	<%= form_for(@charge, :html => {:class => "form-horizontal"}) do |f| %>
+	  <% if @charge.errors.any? %>
+		<div id="error_explanation">
+		  <h2><%= pluralize(@charge.errors.count, "error") %> prohibited this charge from being saved:</h2>
+
+		  <ul>
+		  <% @charge.errors.full_messages.each do |msg| %>
+			<li><%= msg %></li>
+		  <% end %>
+		  </ul>
+		</div>
+	  <% end %>
+
+	  <fieldset>
+		  <div class="control-group">
+			<%= f.label :user_id, '用户名', :class => "control-label" %>
+			<div class="controls">
+				<%= f.collection_select :user_id, User.where("zw_user_level < 10"), :id, :name, {:prompt => "选择要充值的代理"} %>
+			</div>
+		  </div>
+		  <div class="control-group">
+			<%= f.label :amount, '金额', :class => "control-label" %>
+			<div class="controls">
+				<%= f.number_field :amount, :size => 40 %><span> 元</span>
+			</div>
+		  </div>
+		  <div class="control-group">
+			<%= f.label :unit_price, '单价', :class => "control-label" %>
+			<div class="controls">
+				<%= f.number_field :unit_price, :size => 40 %><span> 分</span>
+			</div>
+		  </div>
+		  <div class="control-group">
+			<%= f.label :sms_number, '短信条数', :class => "control-label" %>
+			<div class="controls">
+				<%= f.number_field :sms_number, :size => 40 %><span> 条</span>
+			</div>
+		  </div>
+		  
+		  <div class="actions">
+			<%= f.submit "提交", :class=>"btn" %>
+			<%= link_to '返回', charges_path, :class=>"btn" %>
+		  </div>
+		</fieldset>
+	<% end %>
+</div>	

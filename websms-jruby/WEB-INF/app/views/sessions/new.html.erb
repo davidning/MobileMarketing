@@ -1,0 +1,41 @@
+<% content_for :title do %>
+	<%= "登录" %>
+<% end %>
+
+<div class="row">	
+	<div class="span4 offset4">
+		<h1 class="page-header">移动营销平台</h1>
+	</div>	
+</div>	
+
+<div class="row">	
+	<% if flash[:alert] %>
+		<p id="notice"><%= flash[:alert] %></p>
+	<% end %>
+</div>	
+
+<div class="row">	
+	<div class="span4 offset4">
+		<%= form_tag({}, :class => "well") do %>
+			<fieldset>
+				<div class="control-group">
+					<label for="name"><strong>用户名</strong></label>
+					<div class="controls">
+						<%= text_field_tag :name, params[:name] %>
+					</div>	
+				</div>
+				
+				<div class="control-group">
+					<label for="password"><strong>密码</strong></label>
+					<div class="controls">
+						<%= password_field_tag :password, params[:password] %>
+					</div>	
+				</div>
+				
+				<div>
+					<%= submit_tag "登录", :class => "btn btn-primary" %>
+				</div>
+			</fieldset>
+		<% end %>
+	</div>	
+</div>	

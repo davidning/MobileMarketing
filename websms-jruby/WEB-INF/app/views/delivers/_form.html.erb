@@ -1,0 +1,49 @@
+<%= form_for(@deliver) do |f| %>
+  <% if @deliver.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@deliver.errors.count, "error") %> prohibited this deliver from being saved:</h2>
+
+      <ul>
+      <% @deliver.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :mobile %><br />
+    <%= f.text_field :mobile %>
+  </div>
+  <div class="field">
+    <%= f.label :servicecode %><br />
+    <%= f.text_field :servicecode %>
+  </div>
+  <div class="field">
+    <%= f.label :spnumber %><br />
+    <%= f.text_field :spnumber %>
+  </div>
+  <div class="field">
+    <%= f.label :message %><br />
+    <%= f.text_field :message %>
+  </div>
+  <div class="field">
+    <%= f.label :pktotal %><br />
+    <%= f.number_field :pktotal %>
+  </div>
+  <div class="field">
+    <%= f.label :responsecode %><br />
+    <%= f.number_field :responsecode %>
+  </div>
+  <div class="field">
+    <%= f.label :responseinfo %><br />
+    <%= f.text_field :responseinfo %>
+  </div>
+  <div class="field">
+    <%= f.label :replybody %><br />
+    <%= f.text_field :replybody %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

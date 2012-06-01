@@ -1,0 +1,54 @@
+﻿<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title><%= content_for?(:title) ? yield(:title) + " - 移动营销平台" : "移动营销平台" %></title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+	<% if @current_user %>
+		<style type="text/css">
+		  body {
+			padding-top: 40px;
+			padding-bottom: 40px;
+		  }
+		  .sidebar-nav {
+			padding: 9px 0;
+		  }
+		</style>
+	<% end %>
+
+	<%= stylesheet_link_tag "application", :media => "all" %>
+	<%= javascript_include_tag "application" %>
+	<%= javascript_include_tag "rails" %>	
+	<%= csrf_meta_tags %>
+	
+	<% if content_for?(:head_include) %>
+	  <%= yield(:head_include) %>
+	<% end %>
+
+	<% if content_for?(:javascript) %>
+	  <script>
+		<%= yield(:javascript) %>
+	  </script>
+	<% end %>
+
+	<%= yield(:head) %>	
+</head>
+
+<body>
+	<% if @current_user %>
+		<%= render 'layouts/navigation' %>
+	<% end %>
+	
+	<div class="container">
+		<%= yield %>
+
+		<hr>
+		<%= render 'layouts/footer' %>
+	</div>
+	
+</body>
+</html>

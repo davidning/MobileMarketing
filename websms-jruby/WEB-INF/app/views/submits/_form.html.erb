@@ -1,0 +1,56 @@
+<div class="row-fluid">
+	<%= form_for(@submit ,:html => {:class => "form-horizontal"}) do |f| %>
+		<fieldset>
+			<legend>输入相关信息</legend>
+			<div class="control-group">
+				<%= f.label :msgsrc, "企业代码", :class => "control-label" %>
+				<div class="controls">
+					<%= f.number_field :msgsrc, :class => "span4", :placeholder => "901234" %>
+				</div>	
+			</div>	
+			<div class="control-group">
+				<%= f.label :serviceid, "业务代码", :class => "control-label" %>
+				<div class="controls">
+					<%= f.text_field :serviceid, :class => "span4", :placeholder => "HELP" %>
+				</div>	
+			</div>	
+			<div class="control-group">
+				<%= f.label :feetype, "计费类型", :class => "control-label" %>
+				<div class="controls">
+					<%= f.number_field :feetype, :class => "span4", :placeholder => "01" %>
+				</div>	
+			</div>	
+			<div class="control-group">
+				<%= f.label :feecode, "计费费率", :class => "control-label" %>
+				<div class="controls">
+					<%= f.number_field :feecode, :class => "span4", :placeholder => "000000" %>
+				</div>	
+			</div>	
+			<div class="control-group">
+				<%= f.label :spnumber, "服务号码", :class => "control-label" %>
+				<div class="controls">
+					<%= f.number_field :spnumber, :class => "span4", :placeholder => "10658690" %>
+				</div>	
+			</div>	
+			<div class="control-group">
+				<%= f.label :mobile, "手机号码", :class => "control-label" %>
+				<div class="controls">
+					<%= f.telephone_field :mobile, :class => "span4", :placeholder => "13527325475" %>
+				</div>	
+			</div>	
+			<div class="control-group">
+				<%= f.label :message, "消息内容", :class => "control-label" %>
+				<div class="controls">
+					<%= f.text_area :message, :class => "span4", :rows => 3, :cols => 40, :placeholder => "Test消息…" %>
+				</div>	
+			</div>	
+			<div class="control-group">
+				<%= f.label :linkid, "LinkId", :class => "control-label" %>
+				<div class="controls">
+					<%= f.text_field :linkid, :class => "span4", :placeholder => "" %>
+				</div>	
+			</div>	
+			<%= f.submit "提交", :class=>"btn" %>
+		</fieldset>
+	<% end %>
+</div>	

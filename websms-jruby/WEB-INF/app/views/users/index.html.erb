@@ -1,0 +1,65 @@
+<% content_for :title do %>
+	<%= "用户管理" %>
+<% end %>
+
+<div class="row-fluid">
+	<h1 class="page-header">用户管理 
+		<%= link_to '新建用户', new_user_path, { :class => 'btn btn-primary pull-right'} %>
+	</h1>
+</div>
+
+<%= render(:partial => "shared/notice", :locals => {:notice => notice}) %>
+	
+<div class="row-fluid">
+	<ul class="nav nav-pills">
+		<li><%= link_to "全部(" + User.count().to_s + ") ", users_path %></li>
+		<% if User.where(:zw_user_level => 10).count() > 0 %>
+			<li><%= link_to "超级管理员(" + User.where(:zw_user_level => 10).count().to_s + ") ", users_path(:user_level => 10) %></li>
+		<% end %>	
+		<% if User.where(:zw_user_level => 9).count() > 0 %>
+			<li><%= link_to "管理员(" + User.where(:zw_user_level => 9).count().to_s + ") ", users_path(:user_level => 9) %></li>
+		<% end %>	
+		<% if User.where(:zw_user_level => 8).count() > 0 %>
+			<li><%= link_to "代理商(" + User.where(:zw_user_level => 8).count().to_s + ") ", users_path(:user_level => 8) %></li>
+		<% end %>	
+	</ul>
+</div>
+
+<div class="row-fluid">
+	<table class="table table-condensed table-bordered">
+		<thead>
+		  <tr>
+			<th>用户名</th>
+			<th>姓名</th>
+			<th>角色</th>		
+			<th>扩展号码</th>
+			<th>当天发送</th>		
+			<th>当月发送</th>
+			<th>剩余条数</th>
+			<th>操作栏</th>
+		  </tr>
+		</thead>
+		
+		<tbody>
+			<% @users.each do |user| %>
+			  <tr>
+				<td><%= user.name %></td>
+				<td><%= user.truename %></td>
+				<td><%= User.level_desc(user.zw_user_level) %></td>
+				<td><%= user.extcode %></td>
+				<td><%= user.name %></td>
+				<td><%= user.name %></td>
+				<td><%= user.tavailable %></td>
+				<td>
+					<%= link_to '充值', user, :class=>"btn btn-mini" %>
+					<%= link_to '查看', user, :class=>"btn btn-mini" %>
+					<%= link_to '编辑', edit_user_path(user), :class=>"btn btn-mini" %>
+					<%= link_to '删除', user, confirm: 'Are you sure?', method: :delete, :class=>"btn btn-mini btn-danger" %>
+				</td>
+			  </tr>
+			<% end %>
+		</tbody>	
+	</table>
+
+	<p><%= will_paginate @users %></p>
+</div>

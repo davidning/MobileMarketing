@@ -1,0 +1,74 @@
+<% content_for :javascript do %>	
+	function hideFileUpload() {
+		var fileUpload = document.getElementById('fileUpload');
+		fileUpload.style.display = 'none';  
+		
+		var manualInput = document.getElementById('manualInput');
+		manualInput.style.display = 'block';  
+	}
+	
+	function hideManualInput() {
+		var manualInput = document.getElementById('manualInput');
+		manualInput.style.display = 'none';  
+
+		var fileUpload = document.getElementById('fileUpload');
+		fileUpload.style.display = 'block';  		
+	}
+<% end %>
+
+<% if notice %>
+<div class="row-fluid">
+	<div class="alert">
+		<p id="notice"><%= notice %></p>
+	</div>
+</div>	
+<% end %>
+
+<div class="row-fluid">
+	<%= form_for(@whitelist, :html => {:class => "form-horizontal well"}) do |f| %>
+	  <% if @whitelist.errors.any? %>
+		<div id="error_explanation">
+		  <h2><%= pluralize(@whitelist.errors.count, "error") %> prohibited this whitelist from being saved:</h2>
+
+		  <ul>
+		  <% @whitelist.errors.full_messages.each do |msg| %>
+			<li><%= msg %></li>
+		  <% end %>
+		  </ul>
+		</div>
+	  <% end %>
+
+		<fieldset>
+			<div class="control-group">
+				<%= f.label :gw_id, :class => "control-label" %>
+				<div class="controls">
+					<%= f.collection_select :gw_id, SmsGateway.all, :id, :name, {:prompt => "选择网关通道"} %>
+				</div>	
+			</div>
+		  <div class="control-group">
+			<%= label_tag :number_source, '号码来源', :class => "control-label" %>
+			<div class="controls">
+				<%= radio_button_tag :number_source, 0, true, :onClick => "hideFileUpload()" %>手工输入
+				<%= radio_button_tag :number_source, 1, false, :onClick => "hideManualInput()" %>从文件导入
+			</div>
+		  </div>
+			<div class="control-group" id="manualInput">
+				<%= f.label :telephone, :class => "control-label" %>
+				<div class="controls">
+					<%= f.phone_field :telephone %>
+				</div>	
+			</div>
+			<div class="control-group hide" id="fileUpload">
+				<%= f.label :numberfile, '上传号码文件', :class => "control-label" %>
+				<div class="controls">
+					<%= f.file_field :numberfile %>
+				</div>
+			</div>
+
+			<div class="actions">
+				<%= f.submit "提交", :class=>"btn btn-primary" %>
+				<%= link_to '返回', whitelists_path, :class=>"btn" %>
+			</div>
+		</fieldset>
+	<% end %>
+</div>

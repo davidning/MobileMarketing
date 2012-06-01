@@ -1,0 +1,61 @@
+<% content_for :title do %>
+	<%= "发件箱" %>
+<% end %>
+
+<div class="row-fluid">
+	<h1 class="page-header">发件箱</h1>
+</div>
+
+<%= render(:partial => "shared/notice", :locals => {:notice => notice}) %>
+
+
+<div class="row-fluid">
+	<span class="span3">
+		<%= form_tag(search_submits_path, :class => "form-search") do %>
+			<%= search_field_tag :query, "", :class => "input-medium search-query", :placeholder => "15811080221" %>
+			<%= submit_tag("搜索") %>
+		<% end %>	
+	</span>
+	<ul class="nav nav-pills">
+		<li><%= link_to "全部 (" + Submit.count().to_s + ")", submits_path %> </li>
+		<% Submit.uniq.pluck(:user_id).each do |user_id|%>
+			<% if user_id %>
+				<li><%= link_to User.find_by_id(user_id).try(:name) + "(" + Submit.where(:user_id => user_id).count().to_s + ")", submits_path(:user_id => user_id) %></li>
+			<% end %>	
+		<% end %>	
+	</ul>
+</div>
+
+<div class="row-fluid">	
+	<table class="table table-condensed table-bordered">
+		<thead>
+			<tr>
+				<th>编号</th>
+				<th>用户</th>
+				<th>任务编号</th>
+				<th>手机号码</th>
+				<th>短信内容</th>
+				<th>提交时间</th>
+				<th>入库时间</th>
+				<th>任务时间</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @submits.each do |submit| %>
+			  <tr>
+				<td><%= link_to submit.id.to_s, submit_path(submit.id), {:class => "btn btn-mini btn-info"} %></td>
+				<td><%= User.find_by_id(submit.user_id).try(:name) %></td>
+				<td><%= submit.bulk_id %></td>
+				<td><%= submit.mobile %></td>
+				<td><%= truncate(submit.message) %></td>
+				<td><%= l Bulk.find(submit.bulk_id).created_at, :format => :long %></td>
+				<td><%= l submit.created_at.getlocal, :format => :long %></td>
+				<td><%= l submit.schedule_datetime.getlocal, :format => :long %></td>
+				<td><%= link_to '删除', submit, confirm: 'Are you sure?', method: :delete, :class => 'btn btn-mini btn-danger' %></td>
+			  </tr>
+			<% end %>		
+		</tbody>	
+	</table>
+
+	<p><%= will_paginate @submits %></p>
+</div>

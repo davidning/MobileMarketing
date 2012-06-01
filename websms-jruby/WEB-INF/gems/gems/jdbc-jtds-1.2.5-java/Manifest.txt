@@ -1,0 +1,7 @@
+Manifest.txt
+Rakefile
+README.txt
+LICENSE.txt
+lib/jdbc
+lib/jtds-1.2.5.jar
+lib/jdbc/jtds.rb

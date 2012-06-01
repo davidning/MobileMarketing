@@ -1,0 +1,7 @@
+﻿<%= error_message_for("number_files")%>
+
+<% form_for(:number_files, 
+	:url => {:action => 'save'}) do |f| %>
+	选择号码文件上传: <%= f.file_field("uploaded_files") %>
+<%= f.submit "上传文件" %>	
+<% end %>

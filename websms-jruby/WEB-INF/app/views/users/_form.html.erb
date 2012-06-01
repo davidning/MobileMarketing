@@ -1,0 +1,115 @@
+<div class="row-fluid">
+	<%= form_for(@user, :html => {:class => "form-horizontal"}) do |f| %>
+	  <% if @user.errors.any? %>
+		<div id="error_explanation">
+		  <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+		  <ul>
+		  <% @user.errors.full_messages.each do |msg| %>
+			<li><%= msg %></li>
+		  <% end %>
+		  </ul>
+		</div>
+	  <% end %>
+
+	  <fieldset>
+			<h2>帐号和密码</h2>
+		  <div class="control-group">
+			<%= f.label :name, '用户名', :class => "control-label" %>
+			<div class="controls">
+				<%= f.text_field :name, :size => 40 %>
+			</div>
+		  </div>
+		  <div class="control-group">
+			<%= f.label :zw_user_level, '角色', :class => "control-label" %>
+			<div class="controls">
+				<%= f.select :zw_user_level, User::USER_TYPES, :prompt => "选择用户角色" %>
+			</div>
+		  </div>
+		  <div class="control-group">
+			<%= f.label :password, '输入密码', :class => "control-label" %>
+			<div class="controls">
+				<%= f.password_field :password, :size => 40 %>
+			</div>
+		  </div>
+		  <div class="control-group">
+			<%= f.label :password_confirmation, '确认密码', :class => "control-label" %>
+			<div class="controls">
+				<%= f.password_field :password_confirmation, :size => 40 %>
+			</div>
+		  </div>
+		  
+		  
+			<h2>通道和扩展号设置</h2>
+		  <div class="control-group">
+			<%= f.label :extcode, '扩展号', :class => "control-label" %>
+			<div class="controls">
+				<%= f.text_field :extcode, :size => 40 %>
+			</div>
+		  </div>
+		  <div class="control-group">
+			<%= f.label :tday, '每日流量', :class => "control-label" %>
+			<div class="controls">
+				<%= f.number_field :tday, :size => 40 %>
+			</div>
+		  </div>
+		  <div class="control-group">
+			<%= f.label :tmonth, '每月流量', :class => "control-label" %>
+			<div class="controls">
+				<%= f.number_field :tmonth, :size => 40 %>
+			</div>
+		  </div>
+		  <div class="control-group">
+			<%= f.label :default_channelid, '默认通道', :class => "control-label" %>
+			<div class="controls">
+				<%= f.collection_select :default_channelid, SmsGateway.all, :id, :spid, {:prompt => "请选择一个通道号"} %>
+			</div>
+		  </div>
+
+		  <h2>联系信息</h2>
+		  <div class="control-group">
+			<%= f.label :truename, '姓名', :class => "control-label" %>
+			<div class="controls">
+				<%= f.text_field :truename, :size => 40 %>
+			</div>
+		  </div>
+		  <div class="control-group">
+			<%= f.label :phone, '电话', :class => "control-label" %>
+			<div class="controls">
+				<%= f.telephone_field :phone, :size => 40 %>
+			</div>
+		  </div>
+		  <div class="control-group">
+			<%= f.label :email, '电子邮件', :class => "control-label" %>
+			<div class="controls">
+				<%= f.email_field :email, :size => 40 %>
+			</div>
+		  </div>
+
+			<h2>公司信息</h2>
+		  <div class="control-group">
+			<%= f.label :company_name, '公司名称', :class => "control-label" %>
+			<div class="controls">
+				<%= f.text_field :company_name, :size => 40 %>
+			</div>
+		  </div>
+		  <div class="control-group">
+			<%= f.label :website, '网站', :class => "control-label" %>
+			<div class="controls">
+				<%= f.url_field :website, :size => 40 %>
+			</div>
+		  </div>
+		  <div class="control-group">
+			<%= f.label :company_phone, '电话', :class => "control-label" %>
+			<div class="controls">
+				<%= f.telephone_field :company_phone, :size => 40 %>
+			</div>
+		  </div>
+
+		  <div class="actions">
+			<%= f.submit "提交", :class=>"btn btn-primary" %>
+			<%= link_to '返回', users_path, :class=>"btn" %>
+		  </div>
+		</fieldset>
+	<% end %>
+</div>

@@ -1,0 +1,49 @@
+<% content_for :title do %>
+	<%= "充值管理" %>
+<% end %>
+
+<div class="row-fluid">
+	<h1 class="page-header">充值管理
+		<% if @current_user.zw_user_level == 10 %>
+			  <%= link_to '为用户充值', new_charge_path, :class => "btn btn-primary pull-right" %></small> 
+		<% end %>	
+	</h2>
+</div>
+
+<%= render(:partial => "shared/notice", :locals => {:notice => notice}) %>
+	
+<div class="row-fluid">
+	<table class="table table-striped">
+		<thead>
+		  <tr>
+			<th>用户名</th>
+			<th>金额</th>
+			<th>单价</th>		
+			<th>短信条数</th>
+			<th>充值时间</th>		
+			<th>操作员</th>		
+			<th></th>
+			<th></th>
+			<th></th>
+		  </tr>
+		</thead>
+		
+		<tbody>
+			<% @charges.each do |charge| %>
+			  <tr>
+				<td><%= User.find_by_id(charge.user_id).try(:name) %></td>
+				<td><%= charge.amount %> 元</td>
+				<td><%= charge.unit_price %> 分</td>
+				<td><%= charge.sms_number %> 条</td>
+				<td><%= charge.created_at %></td>
+				<td><%= User.find_by_id(charge.operator_id).try(:name) %></td>
+				<td><%= link_to '查看', charge %></td>
+				<td><%= link_to '编辑', edit_charge_path(charge) %></td>
+				<td><%= link_to '删除', charge, confirm: 'Are you sure?', method: :delete %></td>
+			  </tr>
+			<% end %>
+		</tbody>	
+	</table>
+</div>
+
+<p><%= will_paginate @charges %></p>

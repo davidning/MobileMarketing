@@ -1,0 +1,246 @@
+<% content_for :javascript do %>
+<% end %>
+
+<% if notice %>
+	<div class="row-fluid">
+		<div class="alert alert-warning">
+			<p id="notice"><%= notice %></p>
+		</div>
+	</div>	
+<% end %>
+
+<div class="row-fluid">
+	<%= form_for(@sms_gateway, :html => {:class => "form-horizontal"}) do |f| %>
+		<% if @sms_gateway.errors.any? %>
+		<div id="error_explanation">
+			<h2><%= pluralize(@sms_gateway.errors.count, "error") %> prohibited this sms_gateway from being saved:</h2>
+
+			<ul>
+				<% @sms_gateway.errors.full_messages.each do |msg| %>
+					<li><%= msg %></li>
+				<% end %>
+			</ul>
+		</div>
+		<% end %>
+
+		<fieldset>
+			<div class="row-fluid"><h2>1.连接参数</h2></div>
+			<div class="row-fluid">
+				<div class="span3">
+					<div class="control-group">
+						<%= f.label :name, :class => "control-label" %>
+						<div class="controls">
+							<%= f.text_field :name, :placeholder => "浙江1065", :class => "input-small" %>
+						</div>	
+					</div>
+				</div>
+				<div class="span3">
+					<div class="control-group">
+						<%= f.label :enabled, :class => "control-label", :for => "optionsCheckbox" %>
+						<div class="controls">
+							<%= f.check_box :enabled %>
+						</div>	
+					</div>
+				</div> 
+				<div class="span3">
+					<div class="control-group">
+						<%= f.label :asiainfo, :class => "control-label" %>
+						<div class="controls">
+							<%= f.check_box :asiainfo %>
+						</div>	
+					</div>
+				</div> 
+			</div>
+
+			<div class="row-fluid">
+				<div class="span3">
+					<div class="control-group">
+						<%= f.label :address, :class => "control-label" %>
+						<div class="controls">
+							<%= f.text_field :address, :placeholder => "127.0.0.1", :class => "input-mini" %>
+						</div>	
+					</div>
+				</div>
+				<div class="span3">
+					<div class="control-group">
+						<%= f.label :loginname, :class => "control-label" %>
+						<div class="controls">
+							<%= f.text_field :loginname, :placeholder => "901234", :class => "input-small" %>
+						</div>	
+					</div>
+				</div>
+				<div class="span3">
+					<div class="control-group">
+						<%= f.label :password, :class => "control-label" %>
+						<div class="controls">
+							<%= f.password_field :password, :value => @sms_gateway.password, :class => "input-small" %>
+						</div>	
+					</div>
+				</div>
+			</div>
+
+			<div class="row-fluid">
+				<div class="span3">
+					<div class="control-group">
+						<%= f.label :corpid, :class => "control-label" %>
+						<div class="controls">
+							<%= f.text_field :corpid, :placeholder => "901234", :class => "input-small" %>
+						</div>	
+					</div>
+				</div>
+				<div class="span3">
+					<div class="control-group">
+						<%= f.label :spid, :class => "control-label" %>
+						<div class="controls">
+							<%= f.text_field :spid, :placeholder => "10658888", :class => "input-small" %>
+						</div>	
+					</div>
+				</div>
+				<div class="span3">
+					<div class="control-group">
+						<%= f.label :version, :class => "control-label" %>
+						<div class="controls">
+							<%= f.number_field :version, :placeholder => "2", :class => "input-mini" %>
+						</div>	
+					</div>
+				</div>
+			</div>
+
+			<div class="row-fluid">
+				<div class="span3">
+					<div class="control-group">
+						<%= f.label :moport, :class => "control-label" %>
+						<div class="controls">
+							<%= f.number_field :moport, :placeholder => "7890", :class => "input-mini" %>
+						</div>	
+					</div>
+				</div>
+				<div class="span3">
+					<div class="control-group">
+						<%= f.label :mtport, :class => "control-label" %>
+						<div class="controls">
+							<%= f.number_field :mtport, :placeholder => "7890", :class => "input-mini" %>
+						</div>	
+					</div>
+				</div>
+				<div class="span3">
+					<div class="control-group">
+						<%= f.label :mtandmoport, :class => "control-label" %>
+						<div class="controls">
+							<%= f.number_field :mtandmoport, :placeholder => "7890", :class => "input-mini" %>
+						</div>	
+					</div>
+				</div>
+			</div>
+
+			<div class="row-fluid">
+				<div class="span3">
+					<div class="control-group">
+						<%= f.label :moconnections, :class => "control-label" %>
+						<div class="controls">
+							<%= f.number_field :moconnections, :placeholder => "0", :class => "input-mini" %>
+						</div>	
+					</div>
+				</div>
+				<div class="span3">
+					<div class="control-group">
+						<%= f.label :mtconnections, :class => "control-label" %>
+						<div class="controls">
+							<%= f.number_field :mtconnections, :placeholder => "0", :class => "input-mini" %>
+						</div>	
+					</div>
+				</div>
+				<div class="span3">
+					<div class="control-group">
+						<%= f.label :mtandmoconnections, :class => "control-label" %>
+						<div class="controls">
+							<%= f.number_field :mtandmoconnections, :placeholder => "1", :class => "input-mini" %>
+						</div>	
+					</div>
+				</div>
+			</div>
+						
+			<div class="row-fluid">
+				<div class="span3">
+					<div class="control-group">
+						<%= f.label :mtspeedlimit, :class => "control-label" %>
+						<div class="controls">
+							<%= f.number_field :mtspeedlimit, :placeholder => "10", :class => "input-mini" %> 条/秒
+						</div>	
+					</div>
+				</div>
+			</div>	
+			<div class="row-fluid"><h2>2.业务配置</h2></div>
+			<div class="row-fluid">
+				<div class="span3">
+					<div class="control-group">
+						<%= f.label :serviceid, :class => "control-label" %>
+						<div class="controls">
+							<%= f.text_field :serviceid, :class => "input-mini" %>
+						</div>
+					</div>
+				</div>
+				<div class="span3">
+					<div class="control-group">
+						<%= f.label :feetype, :class => "control-label" %>
+						<div class="controls">
+							<%= f.select :feetype, SmsGateway::FEE_TYPES,{}, :class => "input-mini" %>
+						</div>
+					</div>
+				</div> 
+				<div class="span3">
+					<div class="control-group">
+						<%= f.label :feecode, :class => "control-label" %>
+						<div class="controls">
+							<%= f.text_field :feecode, :placeholder => "000005", :class => "input-mini" %>
+						</div>
+					</div>
+				</div> 
+			</div>
+				
+			<div class="row-fluid"><h2>3.其他配置</h2></div>
+			<div class="row-fluid">
+				<div class="span3">
+					<div class="control-group">
+						<%= f.label :flowlimit_day, :class => "control-label" %>
+						<div class="controls">
+							<%= f.number_field :flowlimit_day, :placeholder => "10000", :class => "input-mini" %>
+						</div>	
+					</div>
+				</div>
+				<div class="span3">
+					<div class="control-group">
+						<%= f.label :flowlimit_total, :class => "control-label" %>
+						<div class="controls">
+							<%= f.number_field :flowlimit_total, :placeholder => "1000000", :class => "input-mini" %>
+						</div>	
+					</div>
+				</div>
+			</div>
+			<div class="row-fluid">
+				<div class="span3">
+					<div class="control-group">
+						<%= f.label :whitelist, :class => "control-label" %>
+						<div class="controls">
+							<%= f.check_box :whitelist %>
+						</div>	
+					</div>
+				</div>
+				<div class="span4">
+					<div class="control-group">
+						<%= f.label :gw_type, :class => "control-label" %>
+						<div class="controls">
+							<%= f.radio_button :gw_type, 0 %>广告营销
+							<%= f.radio_button :gw_type, 1, :checked => true %>行业应用
+						</div>	
+					</div>
+				</div>
+			</div>
+
+			<div class="actions">
+				<%= f.submit "提交", :class=>"btn btn-primary" %>
+				<%= link_to '返回', sms_gateways_path, :class=>"btn" %>
+			</div>
+		</fieldset>
+	<% end %>
+</div>

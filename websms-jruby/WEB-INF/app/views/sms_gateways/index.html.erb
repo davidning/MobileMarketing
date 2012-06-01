@@ -1,0 +1,54 @@
+<% content_for :title do %>
+	<%= "网关管理" %>
+<% end %>
+
+<div class="row-fluid">
+	<h1 class="page-header">网关管理
+		  <%= link_to '新建网关', new_sms_gateway_path, :class => "pull-right btn btn-primary" %> 
+	</h1>
+</div>
+
+<%= render(:partial => "shared/notice", :locals => {:notice => notice}) %>
+
+<div class="row-fluid">
+	<table class="table table-bordered">
+		<thead>
+		  <tr>
+			<th>编号</th>
+			<th>网关名称</th>
+			<th>服务号码</th>
+			<th>下发速度</th>
+			<th>是否启用</th>
+			<th>剩余流量</th>
+			<th>白名单网关</th>
+			<th>网关类型</th>
+			<th>操作栏</th>
+		  </tr>
+		</thead>
+		
+		<tbody>
+			<% @sms_gateways.each do |sms_gateway| %>
+			  <tr>
+				<td><%= link_to sms_gateway.id.to_s, edit_sms_gateway_path(sms_gateway), :class => "btn btn-mini btn-info" %></td>
+				<td><%= sms_gateway.name %></td>
+				<td><%= sms_gateway.spid %></td>
+				<td><%= sms_gateway.mtspeedlimit %></td>
+				<td><%= sms_gateway.enabled ? "是" : "否" %></td>
+				<td><%= sms_gateway.tAvailable %></td>
+				<td><%= sms_gateway.whitelist ? "是" : "否" %></td>
+				<td><%= sms_gateway.gw_type == 0 ? "移动营销" : "行业网关" %></td>
+				<td>
+					<%= link_to '编辑', edit_sms_gateway_path(sms_gateway), :class => 'btn btn-mini' %>
+					<%= link_to '测试', sms_gateway, :class => 'btn btn-mini' %>
+					
+					<% if sms_gateway.whitelist %>
+					<%= link_to '白名单', whitelists_path(:gw_id => sms_gateway.id), :class => 'btn btn-mini' %>
+					<% end %>
+					
+					<%= link_to '删除', sms_gateway, confirm: '确认删除?', :method => :delete, :class => 'btn btn-danger btn-mini' %>
+				</td>
+			  </tr>
+			<% end %>
+		</tbody>	
+	</table>
+</div>	

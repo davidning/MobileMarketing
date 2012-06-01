@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Gw:</b>
+  <%= @whitelist.gw_id %>
+</p>
+
+<p>
+  <b>Telephone:</b>
+  <%= @whitelist.telephone %>
+</p>
+
+
+<%= link_to 'Edit', edit_whitelist_path(@whitelist) %> |
+<%= link_to 'Back', whitelists_path %>

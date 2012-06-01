@@ -1,0 +1,65 @@
+<% content_for :title do %>
+	<%= "收件箱" %>
+<% end %>
+
+<div class="row-fluid">
+	<h1 class="page-header">收件箱</h1>
+</div>
+
+<%= render(:partial => "shared/notice", :locals => {:notice => notice}) %>
+	
+<div class="row-fluid">
+	<span class="span3">
+		<%= form_tag(search_delivers_path, :class => "form-search") do %>
+			<%= search_field_tag :telephone, "", :class => "input-medium search-query", :placeholder => "15811080221" %>
+			<%= submit_tag("搜索") %>
+		<% end %>	
+	</span>
+	<ul class="nav nav-pills">
+		<li><%= link_to "全部 (" + Deliver.count().to_s + ")", delivers_path %> </li>
+		<% Deliver.uniq.pluck(:gw_id).each do |gwid|%>
+			<% if gwid && SmsGateway.find_by_id(gwid) %>
+				<li><%= link_to SmsGateway.find_by_id(gwid).try(:name) + "(" + Deliver.where(:gw_id => gwid).count().to_s + ")", delivers_path(:gw_id => gwid) %></li>
+			<% end %>	
+		<% end %>	
+	</ul>
+</div>
+
+<div class="row-fluid">
+	<table class="table table-bordered table-condensed">
+		<thead>
+		  <tr>
+			<th>编号</th>
+			<th>手机号码</th>
+			<th>业务代码</th>
+			<th>服务号码</th>
+			<th>短信内容</th>
+			<th>短信条数</th>
+			<th>所属网关</th>
+			<th>接收时间</th>
+			<th>操作栏</th>
+		  </tr>
+		</thead>
+		
+		<tbody>
+			<% @delivers.each do |deliver| %>
+			  <tr>
+				<td><%= link_to deliver.id.to_s, deliver, :class => "btn btn-mini btn-info" %></td>
+				<td><%= deliver.mobile %></td>
+				<td><%= deliver.servicecode %></td>
+				<td><%= deliver.spnumber %></td>
+				<td><%= truncate(deliver.message) %></td>
+				<td><%= deliver.pktotal %></td>
+				<td><%= SmsGateway.find_by_id(deliver.gw_id).try(:name) %></td>
+				<td><%= l deliver.created_at, :format => :long %></td>
+				<td>
+					<%= link_to '详细', deliver, :class => "btn btn-mini btn-info" %>  
+					<%= link_to '删除', deliver, confirm: '确定删除?', method: :delete, :class => 'btn btn-mini btn-danger' %>
+				</td>
+			  </tr>
+			<% end %>
+		</tbody>	
+	</table>
+	
+	<p><%= will_paginate @delivers %></p>
+</div>
