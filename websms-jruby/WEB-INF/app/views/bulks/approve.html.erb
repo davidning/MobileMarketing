@@ -63,4 +63,6 @@
 	<%= link_to "同意", {:action => "post_approve", :id => @bulk.id, :approve_result => 4}, {:class => "btn btn-success"} %>
 
 	<%= link_to "拒绝", {:action => "post_approve", :id => @bulk.id, :approve_result => 2}, {:class => "btn btn-danger"} %>
+
+	<%= link_to "返回", bulks_path, :class => "btn btn-info pull-right" %>
 </div>

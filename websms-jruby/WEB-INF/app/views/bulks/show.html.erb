@@ -1,22 +1,15 @@
 <% content_for :title do %>
-	<%= "批量发送详情" %>
+	<%= "发送任务" %>
 <% end %>
 
 <div class="row-fluid">
-	<h2>批量发送报告 <small class="pull-right">任务编号:<span class="badge"><%=@bulk.id %></span></small> </h2>
+	<h1 class="page-header">发送任务 <small class="pull-right">编号:<span class="badge"><%=@bulk.id %></span></small> </h1>
 </div>
 
-<% if notice %>
-<div class="row-fluid">
-	<div class="alert">
-		<p id="notice"><%= notice %></p>
-	</div>
-</div>	
-<% end %>
+<%= render(:partial => "shared/notice", :locals => {:notice => notice}) %>
 
 <div class="row-fluid">
-	<table class="table table-striped table-condensed table-bordered">
-		<caption>发送报告</caption>		
+	<table class="table table-condensed table-bordered">
 		<tbody>
 			<tr>
 				<th>任务编号</th>
@@ -64,4 +57,6 @@
 		  </tr>
 		</tbody>	
 	</table>
+	
+	<%= link_to "返回", bulks_path, :class => "btn btn-primary pull-right" %>
 </div>

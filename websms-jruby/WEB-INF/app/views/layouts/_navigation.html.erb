@@ -26,16 +26,20 @@
 			<div class="nav-collapse">
 				<ul class="nav">
 					<li>
+						<%= link_to("发件箱", submits_path(:submitstate => 0)) %>
+					</li>
+					<li>
 						<%= link_to("收件箱", delivers_path) %>
 					</li>
 					<li>
-						<%= link_to("发件箱", submits_path) %>
-					</li>
-					<li>
-						<%= link_to("已发送", submits_path) %>
+						<%= link_to("已发送", submits_path(:submitstate => 1)) %>
 					</li>
 					<li class="divider-vertical"></li>
-					
+
+					<li>
+						<%= link_to("发短信", new_bulk_path) %>
+					</li>
+				<!--
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 							发短信
@@ -43,28 +47,30 @@
 						</a>
 						<ul class="dropdown-menu">
 							<li>
-								<%= link_to("任务管理", bulks_path) %>
-							</li>
-							<li>
 								<%= link_to("新建任务", new_bulk_path) %>
 							</li>
 						</ul>
 					</li>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-							设置
-							<span class="caret"></span>
-						</a>
-						<ul class="dropdown-menu">
-							<% if @current_user && @current_user.admin? %>
+				-->	
+					<% if @current_user && @current_user.admin? %>
+						<li class="divider-vertical"></li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								管理
+								<span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li>
+									<%= link_to(bulks_path) do %>
+										任务
+									<% end %>
+								</li>
 								<li>
 									<%= link_to(users_path) do %>
 										 用户
 									<% end %>
 								</li>
-							<% end %>	
-							
-							<% if @current_user && @current_user.admin? %>
+
 								<li>
 									<%= link_to(sms_gateways_path) do %>
 										网关
@@ -75,15 +81,21 @@
 										白名单
 									<% end %>
 								</li>
-							<% end %>	
-
-							<li>
-								<%= link_to(charges_path) do %>
-									充值
-								<% end %>
-							</li>
-						</ul>
-					</li>
+								<li>
+									<%= link_to(charges_path) do %>
+										充值
+									<% end %>
+								</li>
+							</ul>
+						</li>
+					<% else %>	
+						<li>
+							<%= link_to(bulks_path(:user_id => @current_user.id)) do %>
+								发送记录
+							<% end %>
+						</li>
+					<% end %>	
+					
 				</ul>	
 			</div>	
 		</div>

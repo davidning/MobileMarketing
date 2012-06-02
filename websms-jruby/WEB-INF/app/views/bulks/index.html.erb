@@ -1,10 +1,9 @@
 <% content_for :title do %>
-	<%= "任务管理" %>
+	<%= "发送记录" %>
 <% end %>
 
 <div class="row-fluid">
-	<h1 class="page-header">任务管理 
-		<%= link_to '添加任务', new_bulk_path, { :class => 'btn btn-primary pull-right' } %>
+	<h1 class="page-header">发送记录 
 	</h1>
 </div>
 
@@ -12,22 +11,41 @@
 
 <div class="row-fluid">
 	<ul class="nav nav-pills">
-		<li><%= link_to "全部 (" + Bulk.count().to_s + ")", bulks_path %> </li>
-		<% if Bulk.where(:state => 0).count() > 0 %>
-			<li><a href="">待审核 <span>(<%= Bulk.where(:state => 0).count() %>)</span></a></li>
-		<% end %>	
-		<% if Bulk.where(:state => 2).count() > 0 %>
-			<li><a href="">待发送 <span>(<%= Bulk.where(:state => 2).count() %>)</span></a></li>
-		<% end %>	
-		<% if Bulk.where(:state => 4).count() > 0 %>
-			<li><a href="">被拒绝 <span>(<%= Bulk.where(:state => 4).count() %>)</span></a></li>
-		<% end %>	
-		<% if Bulk.where(:state => 6).count() > 0 %>
-			<li><a href="">发送中 <span>(<%= Bulk.where(:state => 6).count() %>)</span></a></li>
-		<% end %>	
-		<% if Bulk.where(:state => 8).count() > 0 %>
-			<li><a href="">已完成 <span>(<%= Bulk.where(:state => 8).count() %>)</span></a></li>
-		<% end %>	
+		<% if @current_user.admin? %>
+			<li><%= link_to "全部 (" + Bulk.count().to_s + ")", bulks_path %> </li>
+			<% if Bulk.where(:state => 0).count() > 0 %>
+				<li><%= link_to "待审核(" + Bulk.where(:state => 0).count().to_s  + ") ", bulks_path(:state => 0) %></li>
+			<% end %>	
+			<% if Bulk.where(:state => 2).count() > 0 %>
+				<li><%= link_to "被拒绝(" + Bulk.where(:state => 2).count().to_s  + ") ", bulks_path(:state => 2) %></li>
+			<% end %>	
+			<% if Bulk.where(:state => 4).count() > 0 %>
+				<li><%= link_to "待发送(" + Bulk.where(:state => 4).count().to_s  + ") ", bulks_path(:state => 4) %></li>
+			<% end %>	
+			<% if Bulk.where(:state => 6).count() > 0 %>
+				<li><%= link_to "发送中(" + Bulk.where(:state => 6).count().to_s  + ") ", bulks_path(:state => 6) %></li>
+			<% end %>	
+			<% if Bulk.where(:state => 8).count() > 0 %>
+				<li><%= link_to "已完成(" + Bulk.where(:state => 8).count().to_s  + ") ", bulks_path(:state => 8) %></li>
+			<% end %>	
+		<% else %>
+			<li><%= link_to "全部 (" + Bulk.where(:user_id => @current_user.id).count().to_s + ")", bulks_path %> </li>
+			<% if Bulk.where(:state => 0).count() > 0 %>
+				<li><%= link_to "待审核(" + Bulk.where(:state => 0, :user_id => @current_user.id).count().to_s  + ") ", bulks_path(:state => 0, :user_id => @current_user.id) %></li>
+			<% end %>	
+			<% if Bulk.where(:state => 2, :user_id => @current_user.id).count() > 0 %>
+				<li><%= link_to "被拒绝(" + Bulk.where(:state => 2, :user_id => @current_user.id).count().to_s  + ") ", bulks_path(:state => 2, :user_id => @current_user.id) %></li>
+			<% end %>	
+			<% if Bulk.where(:state => 4, :user_id => @current_user.id).count() > 0 %>
+				<li><%= link_to "待发送(" + Bulk.where(:state => 4, :user_id => @current_user.id).count().to_s  + ") ", bulks_path(:state => 4, :user_id => @current_user.id) %></li>
+			<% end %>	
+			<% if Bulk.where(:state => 6, :user_id => @current_user.id).count() > 0 %>
+				<li><%= link_to "发送中(" + Bulk.where(:state => 6, :user_id => @current_user.id).count().to_s  + ") ", bulks_path(:state => 6, :user_id => @current_user.id) %></li>
+			<% end %>	
+			<% if Bulk.where(:state => 8, :user_id => @current_user.id).count() > 0 %>
+				<li><%= link_to "已完成(" + Bulk.where(:state => 8, :user_id => @current_user.id).count().to_s  + ") ", bulks_path(:state => 8, :user_id => @current_user.id) %></li>
+			<% end %>	
+		<% end %>
 	</ul>
 </div>
 

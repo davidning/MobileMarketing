@@ -1,13 +1,22 @@
 <% content_for :title do %>
-	<%= "发件箱" %>
+	<% if (@submitstate == 0) %>
+		<%= "发件箱" %>
+	<% else %>	
+		<%= "已发送" %>
+	<% end %>	
 <% end %>
 
 <div class="row-fluid">
-	<h1 class="page-header">发件箱</h1>
+	<h1 class="page-header">
+		<% if (@submitstate == 0) %>
+			<%= "发件箱" %>
+		<% else %>	
+			<%= "已发送" %>
+		<% end %>	
+	</h1>
 </div>
 
 <%= render(:partial => "shared/notice", :locals => {:notice => notice}) %>
-
 
 <div class="row-fluid">
 	<span class="span3">
